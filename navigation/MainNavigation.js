@@ -5,19 +5,40 @@ import { AuthContext } from "../Context/AuthContext";
 import BottomTabs from "./BottomTabs";
 import RegisterScreen from "../screens/RegisterScreen";
 import SigninScreen from "../screens/SigninScreen";
+import getItemFromStorage from "../Helpers/getToken";
+import vibraServer from "../api/vibra-server";
+import getToken from "../Helpers/getToken";
 
 const Stack = createStackNavigator();
-export default function MainNavigation() {
-  const { state } = useContext(AuthContext);
-  const [isLogged, setIsLogged] = useState(false);
 
+export default function MainNavigation() {
+  const { state, login, logout } = useContext(AuthContext);
+  const [isLogged, setIsLogged] = useState(false);
+  const initSignin = async () => {
+    try {
+      const token = await getToken();
+
+      if (token) {
+        const res = await vibraServer.get("/auth/getuser", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res.data);
+        login(res.data);
+      }
+      setIsLogged(state.isLogged);
+    } catch (error) {
+      logout();
+    }
+  };
   useEffect(() => {
-    setIsLogged(state.isLogged);
-  }, [state.isLogged]);
+    initSignin();
+  }, []);
 
   return (
     <Stack.Navigator>
-      {isLogged ? (
+      {state.isLogged ? (
         <Stack.Screen
           name="tab"
           component={BottomTabs}

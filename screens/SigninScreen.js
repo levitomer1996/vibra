@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Input, Button } from "@rneui/base";
 import { Text } from "react-native-paper";
+import vibraServer from "../api/vibra-server";
+import { AuthContext } from "../Context/AuthContext";
+import setStorage from "../Helpers/setStorage";
+import getItemFromStorage from "../Helpers/getToken";
+import getToken from "../Helpers/getToken";
 
 const SigninScreen = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [progress, setProgress] = useState(false);
+  const handleSignin = async () => {
+    try {
+      setProgress(true);
+      const res = await vibraServer.post("auth/signin", { email, password });
+      await setStorage("token", res.data.token);
 
-  const handleSignin = () => {
-    // Handle user signin here
-    console.log("Signin user with email:", email, "and password:", password);
+      login(res.data.user);
+      setProgress(false);
+    } catch (error) {
+      setProgress(false);
+    }
   };
 
   return (

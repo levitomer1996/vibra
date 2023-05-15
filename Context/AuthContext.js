@@ -7,7 +7,8 @@ const initialState = {
   isLogged: false,
   friends: [],
   chats: [],
-  languages: [],
+  languge_speak: [],
+  languge_learn: [],
   userRate: 0,
 };
 

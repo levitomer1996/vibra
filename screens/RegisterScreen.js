@@ -6,7 +6,7 @@ import languges from "../components/languges";
 import { Text } from "react-native-paper";
 import SignupCredentials from "../DTO/SignupCredentials";
 import ProgressBar from "../components/ProgressBar";
-import vibra from "../api/vibra";
+import vibra from "../api/vibra-server";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
