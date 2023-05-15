@@ -2,6 +2,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { Ionicons } from "@expo/vector-icons";
 import SettingsScreen from "../screens/SettingsScreen";
 import ChatScreen from "../screens/ChatScreen";
+import FriendsScreen from "../screens/FriendsScreen";
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomTabs = () => {
@@ -24,6 +25,16 @@ const BottomTabs = () => {
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (
             <Ionicons name="settings-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Friends"
+        component={FriendsScreen}
+        options={{
+          tabBarLabel: "Friends",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="people-outline" size={24} color={color} />
           ),
         }}
       />
