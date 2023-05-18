@@ -1,13 +1,10 @@
 class SignupCredentials {
   email;
-
   password;
-
   f_name;
-
   languge_speak;
-
   languge_learn;
+  
   constructor(email, password, f_name, languge_speak, languge_learn) {
     this.email = email;
     this.password = password;
